@@ -4,10 +4,11 @@ import telebot
 from googletrans import Translator
 from telebot import types
 
-openai.api_key = "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"
+openai.api_key = "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"
 translator = Translator(service_urls=['translate.google.com'])
 
 bot = telebot.TeleBot("5640041523:AAGwve4jt4aIDYE5NWok-vFpaJGNSBqnzDQ")
+translate_enabled = False
 
 @bot.message_handler(commands=['start'])
 def start(message):
@@ -31,18 +32,14 @@ def disable_translation(message):
     global translate_enabled
     translate_enabled = False
 
-
 @bot.message_handler(content_types=["text"])
 def handle_text(message):
-    global translate_enabled
-    translate_enabled = False
-
     user_input = message.text
 
     response = openai.Completion.create(
         engine="text-davinci-002",
         prompt=user_input,
-        max_tokens=1024,
+        max_tokens=256, # Reduce the number of tokens returned by the API
         n=1,
         stop=None,
         temperature=0.5,
@@ -53,7 +50,5 @@ def handle_text(message):
         bot.reply_to(message, response_translated)
     else:
         bot.reply_to(message, response)
-
+        
 bot.polling()
-
-
