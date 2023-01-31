@@ -4,7 +4,7 @@ import telebot
 from googletrans import Translator
 from telebot import types
 
-openai.api_key = "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"
+openai.api_key = "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"
 translator = Translator(service_urls=['translate.google.com'])
 
 bot = telebot.TeleBot("5640041523:AAGwve4jt4aIDYE5NWok-vFpaJGNSBqnzDQ")
